@@ -57,12 +57,12 @@ for epoch in range(num_epochs):
     loss.backward()
     optimizer.step()
 predictions = model(xTest)
-print(predictions.data)
+#print(predictions.data)
 
-torch.save(model.state_dict(), 'DEATH_EVENT.pth')
+#torch.save(model.state_dict(), 'DEATH_EVENT.pth')
 
 accuracy_score = accuracy_score(yTest, np.argmax(predictions.detach().numpy(), axis=1))
-#print("accuracy_score", accuracy_score)
+print("accuracy_score", accuracy_score)
 
 with open("metrics.txt", 'w') as outfile:
     outfile.write("Accuracy: " + str(accuracy_score) + "\n")
