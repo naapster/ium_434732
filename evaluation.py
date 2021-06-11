@@ -4,7 +4,6 @@ from torch import nn
 import numpy as np
 import pandas as pd
 from sklearn.metrics import accuracy_score
-from sklearn.metrics import f1_score
 np.set_printoptions(suppress=False)
 
 
@@ -41,17 +40,29 @@ input_dim = 11
 output_dim = 1
 
 model = LogisticRegressionModel(input_dim, output_dim)
-model.load_state_dict(torch.load('DEATH_EVENT.pth'))
+
 criterion = torch.nn.BCELoss(reduction='mean')
 optimizer = torch.optim.SGD(model.parameters(), lr = learning_rate)
 
+for epoch in range(num_epochs):
+    # print ("Epoch #",epoch)
+    model.train()
+    optimizer.zero_grad()
+    # Forward pass
+    y_pred = model(xTrain)
+    # Compute Loss
+    loss = criterion(y_pred, yTrain)
+    # print(loss.item())
+    # Backward pass
+    loss.backward()
+    optimizer.step()
+predictions = model(xTest)
+print(predictions.data)
 
-prediction= model(xTest)
+torch.save(model.state_dict(), 'DEATH_EVENT.pth')
 
-
-accuracy_score = accuracy_score(yTest, np.argmax(prediction.detach().numpy(), axis=1))
+accuracy_score = accuracy_score(yTest, np.argmax(predictions.detach().numpy(), axis=1))
 print("accuracy_score", accuracy_score)
-print("F1", f1_score(yTest, np.argmax(prediction.detach().numpy(), axis=1), average=None))
 
 with open("metrics.txt", 'w') as outfile:
-    outfile.write("Accuracy: " + f1_score(yTest, np.argmax(prediction.detach().numpy(), axis=1), average=None) + "\n")
+    outfile.write("Accuracy: " + str(accuracy_score) + "\n")
