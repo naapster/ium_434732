@@ -18,5 +18,4 @@ jobs:
           python evaluation.py
 
           cat metrics.txt >> report.md
-          cml-publish confusion_matrix.png --md >> report.md
           cml-send-comment report.mdn
