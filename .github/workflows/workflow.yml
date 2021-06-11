@@ -15,7 +15,7 @@ jobs:
           pip3 install scikit-learn
           pip3 install matplotlib
           pip3 install torch torchvision torchaudio
-          python ewaluation.py
+          python evaluation.py
 
           cat metrics.txt >> report.md
           cml-publish confusion_matrix.png --md >> report.md
