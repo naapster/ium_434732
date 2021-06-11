@@ -1,4 +1,3 @@
-%%writefile .github/workflows/cml.yaml
 name: model-training
 on: [push]
 jobs:
