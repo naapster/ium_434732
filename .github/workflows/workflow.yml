@@ -18,4 +18,4 @@ jobs:
           python evaluation.py
 
           cat metrics.txt >> report.md
-          cml-send-comment report.mdn
+          cml-send-comment report.md
